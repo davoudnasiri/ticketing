@@ -9,28 +9,16 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Ticket {
   id          Int       @id @default(autoincrement())
-  title       String    @db.VarChar(255)
-  description String    @db.Text
-  status      Status    @default(OPEN)
-  priority    Priority  @default(MEDIUM)
+  title       String
+  description String
+  status      String    @default("OPEN")
+  priority    String    @default("MEDIUM")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-}
-
-enum Status {
-  OPEN
-  STARTED
-  CLOSED
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
 }
