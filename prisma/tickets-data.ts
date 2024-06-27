@@ -11,7 +11,7 @@ export const ticketsData = [
     title: "Feature request: Dark mode",
     description:
       "Users have requested a dark mode option for better readability at night.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "MEDIUM",
     createdAt: new Date("2023-02-20T09:15:00Z"),
     updatedAt: new Date("2023-02-22T11:45:00Z"),
@@ -38,7 +38,7 @@ export const ticketsData = [
     title: "Security audit for API endpoints",
     description:
       "Conduct a thorough security audit to identify and fix vulnerabilities in API endpoints.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "HIGH",
     createdAt: new Date("2023-05-02T13:45:00Z"),
     updatedAt: new Date("2023-05-04T15:10:00Z"),
@@ -56,7 +56,7 @@ export const ticketsData = [
     title: "Server upgrade for improved performance",
     description:
       "Upgrade the server hardware to improve application performance and reliability.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "HIGH",
     createdAt: new Date("2023-07-12T10:00:00Z"),
     updatedAt: new Date("2023-07-14T12:15:00Z"),
@@ -74,7 +74,7 @@ export const ticketsData = [
     title: "Mobile app bug fixes",
     description:
       "Fix bugs reported in the mobile app to improve stability and performance.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "HIGH",
     createdAt: new Date("2023-09-18T12:40:00Z"),
     updatedAt: new Date("2023-09-20T14:50:00Z"),
@@ -101,7 +101,7 @@ export const ticketsData = [
     title: "API documentation update",
     description:
       "Update the API documentation to include recent changes and improvements.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "MEDIUM",
     createdAt: new Date("2023-12-05T16:50:00Z"),
     updatedAt: new Date("2023-12-07T17:00:00Z"),
@@ -119,7 +119,7 @@ export const ticketsData = [
     title: "Customer support improvements",
     description:
       "Implement improvements to the customer support process and tools.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "MEDIUM",
     createdAt: new Date("2024-02-15T20:20:00Z"),
     updatedAt: new Date("2024-02-17T21:30:00Z"),
@@ -137,7 +137,7 @@ export const ticketsData = [
     title: "New feature: User profiles",
     description:
       "Develop a new feature to allow users to create and manage profiles.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "HIGH",
     createdAt: new Date("2024-04-25T08:00:00Z"),
     updatedAt: new Date("2024-04-27T09:10:00Z"),
@@ -154,7 +154,7 @@ export const ticketsData = [
   {
     title: "Bug fix: Payment gateway issues",
     description: "Resolve issues with the payment gateway integration.",
-    status: "IN_PROGRESS",
+    status: "PROGRESSING",
     priority: "HIGH",
     createdAt: new Date("2024-06-10T12:40:00Z"),
     updatedAt: new Date("2024-06-12T13:50:00Z"),
