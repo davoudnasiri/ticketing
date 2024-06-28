@@ -1,5 +1,9 @@
 import React from "react";
 
-export default function NotFound() {
-  return <div>not found</div>;
+export default function TicketNotFound() {
+  return (
+    <div className="text-destructive">
+      Sorry, but we could not find your request data
+    </div>
+  );
 }

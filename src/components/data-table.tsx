@@ -8,8 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import TicketStatusBadge from "./ticket-status-badge";
+import TicketStatus from "./ticket-status";
 import TicketPriority from "./ticket-priority";
+import Link from "next/link";
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
 
 interface DataTableProps {
   tickets: Ticket[];
@@ -36,10 +38,15 @@ export default function DataTable({ tickets }: DataTableProps) {
             {tickets
               ? tickets.map((ticket) => (
                   <TableRow key={ticket.id} data-href="/">
-                    <TableCell>{ticket.title}</TableCell>
+                    <TableCell className="flex items-center justify-start gap-5">
+                      <Link href={`/tickets/${ticket.id}`}>
+                        <BiSolidMessageSquareDetail className="text-2xl hover:opacity-75 transition-all" />
+                      </Link>
+                      {ticket.title}
+                    </TableCell>
                     <TableCell>
                       <div className="flex justify-center items-center">
-                        <TicketStatusBadge status={ticket.status} />
+                        <TicketStatus status={ticket.status} />
                       </div>
                     </TableCell>
                     <TableCell>

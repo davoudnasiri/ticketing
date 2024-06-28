@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 
-interface TicketStatusBadgeProps {
+interface TicketStatusProps {
   status: string;
 }
 
@@ -14,10 +14,10 @@ const statusMap: Record<
   CLOSED: { label: "Closed", color: "bg-green-400" },
 };
 
-export default function TicketStatusBadge({ status }: TicketStatusBadgeProps) {
+export default function TicketStatus({ status }: TicketStatusProps) {
   return (
     <Badge
-      className={`${statusMap[status].color} text-background hover:${statusMap[status].color}`}
+      className={`${statusMap[status].color} text-background hover:${statusMap[status].color} px-4 py-2`}
     >
       {statusMap[status].label}
     </Badge>

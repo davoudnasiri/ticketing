@@ -13,7 +13,7 @@ export default async function Tickets() {
         href={"/tickets/new"}
         className={`${buttonVariants({
           variant: "default",
-        })} text-white dark:text-gray-800`}
+        })} text-background`}
       >
         New Ticket
       </Link>
