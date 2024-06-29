@@ -5,9 +5,14 @@ import { useFormState } from "react-dom";
 import * as actions from "@/actions";
 import "easymde/dist/easymde.min.css";
 import LoadingButton from "@/components/loading-button";
+import { Ticket } from "@prisma/client";
 
-export default function TicketForm() {
-  const [formState, action] = useFormState(actions.createTicket, {
+interface TicketFormProps {
+  ticket?: Ticket;
+}
+
+export default function TicketForm({ ticket }: TicketFormProps) {
+  const [formStateCreate, actionCreate] = useFormState(actions.createTicket, {
     errors: {
       title: [],
       description: [],
@@ -17,29 +22,52 @@ export default function TicketForm() {
     },
   });
 
+  const [formStateEdit, actionEdit] = useFormState(actions.editTicket, {
+    errors: {
+      title: [],
+      description: [],
+      status: [],
+      priority: [],
+      _form: [],
+      id: [],
+    },
+  });
+
   return (
-    <div className="rounded-md border w-full p-4 bg-gray-50 dark:bg-transparent">
-      <form action={action}>
+    <div className="rounded-md border w-full p-4 bg-gray-50 dark:bg-transparent text-secondary-foreground dark:text-background">
+      <form action={ticket ? actionEdit : actionCreate}>
         <input
           type="text"
           name="title"
           placeholder="title"
-          className="w-full bg-gray-100 dark:bg-gray-200 rounded p-2 mb-2"
+          defaultValue={ticket?.title}
+          className="w-full bg-gray-200 rounded p-2 mb-2"
         />
-        {(formState.errors.title?.length ?? 0) > 0 ? (
+        {(formStateCreate.errors.title?.length ?? 0) > 0 ? (
           <div className="p-2 mb-5 bg-red-200 border border-red-400 rounded text-red-700">
-            {formState.errors.title?.join(", ")}
+            {formStateCreate.errors.title?.join(", ")}
+          </div>
+        ) : null}
+        {(formStateEdit.errors.title?.length ?? 0) > 0 ? (
+          <div className="p-2 mb-5 bg-red-200 border border-red-400 rounded text-red-700">
+            {formStateEdit.errors.title?.join(", ")}
           </div>
         ) : null}
         <textarea
           name="description"
-          rows={5}
+          rows={8}
           placeholder="description"
-          className="w-full bg-gray-100 dark:bg-gray-200 rounded p-2"
+          defaultValue={ticket?.description}
+          className="w-full bg-gray-200 rounded p-2"
         />
-        {(formState.errors.description?.length ?? 0) > 0 ? (
+        {(formStateCreate.errors.description?.length ?? 0) > 0 ? (
           <div className="p-2 mb-5 bg-red-200 border border-red-400 rounded text-red-700">
-            {formState.errors.description?.join(", ")}
+            {formStateCreate.errors.description?.join(", ")}
+          </div>
+        ) : null}
+        {(formStateEdit.errors.description?.length ?? 0) > 0 ? (
+          <div className="p-2 mb-5 bg-red-200 border border-red-400 rounded text-red-700">
+            {formStateEdit.errors.description?.join(", ")}
           </div>
         ) : null}
         <div className="flex items-end justify-center gap-5 mb-5 text-gray-500">
@@ -47,7 +75,8 @@ export default function TicketForm() {
             <span className="text-gray-400 dark:text-gray-300">status</span>
             <select
               name="status"
-              className="bg-gray-100 dark:bg-gray-200 rounded p-2 cursor-pointer"
+              defaultValue={ticket?.status}
+              className="bg-gray-200 rounded p-2 cursor-pointer"
             >
               <option value="OPEN">Open</option>
               <option value="PROGRESSING">Progressing</option>
@@ -58,7 +87,8 @@ export default function TicketForm() {
             <span className="text-gray-400 dark:text-gray-300">priority</span>
             <select
               name="priority"
-              className="w-full bg-gray-100 dark:bg-gray-200 rounded p-2 cursor-pointer"
+              defaultValue={ticket?.priority}
+              className="w-full bg-gray-200 rounded p-2 cursor-pointer"
             >
               <option value="LOW">Low</option>
               <option value="MEDIUM">Medium</option>
@@ -66,13 +96,24 @@ export default function TicketForm() {
             </select>
           </label>
           <div className="flex flex-col items-center justify-center flex-grow">
-            {(formState.errors._form?.length ?? 0) > 0 ? (
+            {(formStateCreate.errors._form?.length ?? 0) > 0 ? (
               <div className="w-full p-2 mb-2 bg-red-200 border border-red-400 rounded text-red-700">
-                {formState.errors._form?.join(", ")}
+                {formStateCreate.errors._form?.join(", ")}
               </div>
             ) : null}
-            <LoadingButton className="w-full opacity-80" variant="default">
-              Submit
+            {(formStateEdit.errors._form?.length ?? 0) > 0 ? (
+              <div className="w-full p-2 mb-2 bg-red-200 border border-red-400 rounded text-red-700">
+                {formStateEdit.errors._form?.join(", ")}
+              </div>
+            ) : null}
+
+            {ticket && <input type="hidden" name="id" value={ticket?.id} />}
+            <LoadingButton
+              type="submit"
+              className="w-full font-bold"
+              variant="default"
+            >
+              {ticket ? "Update" : "Submit"}
             </LoadingButton>
           </div>
         </div>
