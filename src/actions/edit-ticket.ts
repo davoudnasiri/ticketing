@@ -4,9 +4,9 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { editTicketSchema } from "@/validation-schema/tickets-schema";
+import { editTicketSchema } from "@/lib/tickets-schema";
 
-interface editTicketFormState {
+interface EditTicketFormState {
   errors: {
     title?: string[];
     description?: string[];
@@ -18,9 +18,9 @@ interface editTicketFormState {
 }
 
 export async function editTicket(
-  fromState: editTicketFormState,
+  fromState: EditTicketFormState,
   formData: FormData
-): Promise<editTicketFormState> {
+): Promise<EditTicketFormState> {
   ////////////// Delay //////////////
   await new Promise((resolve) => setTimeout(resolve, 1000));
 

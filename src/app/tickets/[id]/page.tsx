@@ -13,6 +13,7 @@ import TicketStatus from "@/components/ticket-status";
 import TicketPriority from "@/components/ticket-priority";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import DeleteButton from "@/components/delete-button";
 
 interface SingleTicketProps {
   params: {
@@ -63,7 +64,7 @@ export default async function SingleTicket({ params }: SingleTicketProps) {
           hour12: false,
         })}
       </CardFooter>
-      <div className="flex items-center justify-start gap-4 p-4">
+      <div className="flex items-start justify-start gap-4 p-4">
         <Link
           href={`/tickets/${ticket.id}/edit`}
           className={`${buttonVariants({
@@ -72,12 +73,7 @@ export default async function SingleTicket({ params }: SingleTicketProps) {
         >
           Edit Ticket
         </Link>
-        <Link
-          href={`/tickets/${ticket.id}/edit`}
-          className={`${buttonVariants({ variant: "destructive" })}`}
-        >
-          Delete Ticket
-        </Link>
+        <DeleteButton ticketId={ticket.id} />
       </div>
     </Card>
   );

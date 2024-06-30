@@ -5,7 +5,7 @@ import { Ticket } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { createTicketSchema } from "@/validation-schema/tickets-schema";
+import { createTicketSchema } from "@/lib/tickets-schema";
 
 interface CreateTicketFormState {
   errors: {

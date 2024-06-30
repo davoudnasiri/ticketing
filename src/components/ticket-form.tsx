@@ -70,7 +70,7 @@ export default function TicketForm({ ticket }: TicketFormProps) {
             {formStateEdit.errors.description?.join(", ")}
           </div>
         ) : null}
-        <div className="flex items-end justify-center gap-5 mb-5 text-gray-500">
+        <div className="flex items-end justify-center gap-5 mb-5 text-gray-700">
           <label className="flex flex-col items-start justify-center gap-2">
             <span className="text-gray-400 dark:text-gray-300">status</span>
             <select
