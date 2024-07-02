@@ -20,8 +20,8 @@ export default function MainNavLinks() {
           key={link.label}
           href={link.href}
           className={`navbar-link ${
-            link.href === currentPath &&
-            "text-secondary-foreground cursor-default"
+            link.href === currentPath && "text-secondary-foreground"
+          }
           }`}
         >
           {link.label}
