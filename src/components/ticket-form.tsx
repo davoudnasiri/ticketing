@@ -90,9 +90,9 @@ export default function TicketForm({ ticket }: TicketFormProps) {
               defaultValue={ticket?.priority}
               className="w-full bg-gray-200 rounded p-2 cursor-pointer"
             >
-              <option value="LOW">Low</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="HIGH">High</option>
+              <option value="1">Low</option>
+              <option value="2">Medium</option>
+              <option value="3">High</option>
             </select>
           </label>
           <div className="flex flex-col items-center justify-center flex-grow">

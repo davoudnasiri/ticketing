@@ -6,9 +6,9 @@ interface TicketPriorityProps {
 }
 
 const priorityMap: Record<string, { label: string; level: 1 | 2 | 3 }> = {
-  HIGH: { label: "High", level: 3 },
-  MEDIUM: { label: "Medium", level: 2 },
-  LOW: { label: "Low", level: 1 },
+  3: { label: "High", level: 3 },
+  2: { label: "Medium", level: 2 },
+  1: { label: "Low", level: 1 },
 };
 
 export default function TicketPriority({ priority }: TicketPriorityProps) {

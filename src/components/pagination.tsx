@@ -30,12 +30,8 @@ export default function Pagination({
 
   const changePage = (page: number) => {
     const params = new URLSearchParams(searchParams);
-    if (page === 1) {
-      router.push("/tickets");
-    } else {
-      params.set("page", page.toString());
-      router.push("?" + params.toString());
-    }
+    params.set("page", page.toString());
+    router.push("?" + params.toString());
   };
 
   return (

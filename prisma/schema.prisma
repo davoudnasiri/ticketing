@@ -18,7 +18,7 @@ model Ticket {
   title       String
   description String
   status      String    @default("OPEN")
-  priority    String    @default("MEDIUM")
+  priority    String    @default("2")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }

@@ -5,39 +5,74 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import Pagination from "@/components/pagination";
 import { notFound } from "next/navigation";
+import StatusFilter from "@/components/status-filter";
+import { Ticket } from "@prisma/client";
 
-interface SearchParams {
-  searchParams: {
-    page: string;
-  };
+// export interface SearchParams {
+//   searchParams: {
+//     status?: string;
+//     page: string;
+//     orderBy: keyof Ticket;
+//   };
+// }
+export interface SearchParams {
+  status?: string;
+  page: string;
+  orderBy: keyof Ticket;
 }
 
-export default async function Tickets({ searchParams }: SearchParams) {
+const validStatuses = ["OPEN", "PROGRESSING", "CLOSED"];
+
+export default async function Tickets({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const page = parseInt(searchParams.page) || 1;
   const pageSize = 10;
-  const ticketCount = await db.ticket.count();
-  const maxPage = Math.ceil(ticketCount / pageSize);
 
-  if (page < 1 || page > maxPage) {
-    notFound();
+  const orderBy = searchParams.orderBy ? searchParams.orderBy : "updatedAt";
+
+  const status = validStatuses.includes(searchParams.status || "")
+    ? searchParams.status
+    : undefined;
+
+  let where = {};
+  if (status) {
+    where = { status };
+  } else {
+    // where = { NOT: [{ status: "CLOSED" }] };
   }
 
+  const ticketCount = await db.ticket.count({ where });
   const tickets = await db.ticket.findMany({
+    where,
+    orderBy: {
+      [orderBy]: "desc",
+    },
     take: pageSize,
     skip: (page - 1) * pageSize,
   });
 
+  const maxPage = Math.ceil(ticketCount / pageSize);
+  if (page < 1 || page > maxPage) {
+    notFound();
+  }
+
   return (
     <div>
-      <Link
-        href={"/tickets/new"}
-        className={`${buttonVariants({
-          variant: "default",
-        })} text-background`}
-      >
-        New Ticket
-      </Link>
-      <DataTable tickets={tickets} />
+      <div className="flex items-center justify-start gap-4">
+        <Link
+          href={"/tickets/new"}
+          className={`${buttonVariants({
+            variant: "default",
+          })} text-background`}
+        >
+          New Ticket
+        </Link>
+        <StatusFilter />
+      </div>
+      <DataTable tickets={tickets} searchParams={searchParams} />
       <Pagination
         itemCount={ticketCount}
         pageSize={pageSize}
