@@ -8,17 +8,11 @@ import { notFound } from "next/navigation";
 import StatusFilter from "@/components/status-filter";
 import { Ticket } from "@prisma/client";
 
-// export interface SearchParams {
-//   searchParams: {
-//     status?: string;
-//     page: string;
-//     orderBy: keyof Ticket;
-//   };
-// }
 export interface SearchParams {
   status?: string;
   page: string;
   orderBy: keyof Ticket;
+  orderDir?: "asc" | "desc" | undefined;
 }
 
 const validStatuses = ["OPEN", "PROGRESSING", "CLOSED"];
@@ -31,7 +25,8 @@ export default async function Tickets({
   const page = parseInt(searchParams.page) || 1;
   const pageSize = 10;
 
-  const orderBy = searchParams.orderBy ? searchParams.orderBy : "updatedAt";
+  const orderBy = searchParams.orderBy || "updatedAt";
+  const orderDir = searchParams.orderDir || "desc";
 
   const status = validStatuses.includes(searchParams.status || "")
     ? searchParams.status
@@ -48,7 +43,7 @@ export default async function Tickets({
   const tickets = await db.ticket.findMany({
     where,
     orderBy: {
-      [orderBy]: "desc",
+      [orderBy]: orderDir,
     },
     take: pageSize,
     skip: (page - 1) * pageSize,

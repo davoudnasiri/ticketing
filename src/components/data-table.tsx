@@ -12,7 +12,7 @@ import TicketStatus from "./ticket-status";
 import TicketPriority from "./ticket-priority";
 import Link from "next/link";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
-import { FaArrowDown } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { SearchParams } from "@/app/tickets/page";
 
 interface DataTableProps {
@@ -20,7 +20,41 @@ interface DataTableProps {
   searchParams: SearchParams;
 }
 
+const getNextOrderParams = (
+  currentOrderBy: keyof Ticket | undefined,
+  currentDir: "asc" | "desc" | undefined,
+  column: keyof Ticket
+): Partial<SearchParams> => {
+  if (currentOrderBy !== column) {
+    return { orderBy: column, orderDir: "asc" };
+  } else if (currentDir === "asc") {
+    return { orderBy: column, orderDir: "desc" };
+  } else if (currentDir === "desc") {
+    return { orderBy: undefined, orderDir: undefined };
+  } else {
+    return { orderBy: column, orderDir: "asc" };
+  }
+};
+
 export default function DataTable({ tickets, searchParams }: DataTableProps) {
+  const createLink = (column: keyof Ticket) => {
+    const nextOrderParams = getNextOrderParams(
+      searchParams.orderBy,
+      searchParams.orderDir,
+      column
+    );
+
+    const query: Partial<SearchParams> = {
+      ...searchParams,
+      ...nextOrderParams,
+    };
+
+    if (!query.orderBy) delete query.orderBy;
+    if (!query.orderDir) delete query.orderDir;
+
+    return { pathname: "/tickets", query };
+  };
+
   return (
     <div className="w-full my-5">
       <div className="rounded-md sm:border">
@@ -28,46 +62,44 @@ export default function DataTable({ tickets, searchParams }: DataTableProps) {
           <TableHeader>
             <TableRow>
               <TableHead>
-                <Link href={{ query: { ...searchParams, orderBy: "title" } }}>
-                  Title
-                </Link>
-                {"title" === searchParams.orderBy && (
-                  <FaArrowDown className="inline ml-2" />
-                )}
+                <Link href={createLink("title")}>Title</Link>
+                {searchParams.orderBy === "title" &&
+                  (searchParams.orderDir === "asc" ? (
+                    <FaArrowUp className="inline ml-2" />
+                  ) : searchParams.orderDir === "desc" ? (
+                    <FaArrowDown className="inline ml-2" />
+                  ) : null)}
               </TableHead>
               <TableHead>
                 <div className="flex justify-center items-center">
-                  <Link
-                    href={{ query: { ...searchParams, orderBy: "status" } }}
-                  >
-                    Status
-                  </Link>
-                  {"status" === searchParams.orderBy && (
-                    <FaArrowDown className="inline ml-2" />
-                  )}
+                  <Link href={createLink("status")}>Status</Link>
+                  {searchParams.orderBy === "status" &&
+                    (searchParams.orderDir === "asc" ? (
+                      <FaArrowUp className="inline ml-2" />
+                    ) : searchParams.orderDir === "desc" ? (
+                      <FaArrowDown className="inline ml-2" />
+                    ) : null)}
                 </div>
               </TableHead>
               <TableHead>
                 <div className="flex justify-center items-center">
-                  <Link
-                    href={{ query: { ...searchParams, orderBy: "priority" } }}
-                  >
-                    Priority
-                  </Link>
-                  {"priority" === searchParams.orderBy && (
-                    <FaArrowDown className="inline ml-2" />
-                  )}
+                  <Link href={createLink("priority")}>Priority</Link>
+                  {searchParams.orderBy === "priority" &&
+                    (searchParams.orderDir === "asc" ? (
+                      <FaArrowUp className="inline ml-2" />
+                    ) : searchParams.orderDir === "desc" ? (
+                      <FaArrowDown className="inline ml-2" />
+                    ) : null)}
                 </div>
               </TableHead>
               <TableHead>
-                <Link
-                  href={{ query: { ...searchParams, orderBy: "createdAt" } }}
-                >
-                  Created At
-                </Link>
-                {"createdAt" === searchParams.orderBy && (
-                  <FaArrowDown className="inline ml-2" />
-                )}
+                <Link href={createLink("createdAt")}>Created At</Link>
+                {searchParams.orderBy === "createdAt" &&
+                  (searchParams.orderDir === "asc" ? (
+                    <FaArrowUp className="inline ml-2" />
+                  ) : searchParams.orderDir === "desc" ? (
+                    <FaArrowDown className="inline ml-2" />
+                  ) : null)}
               </TableHead>
             </TableRow>
           </TableHeader>
